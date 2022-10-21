@@ -1,5 +1,6 @@
 package edu.eci.arep.collatzConjeture;
 
+import edu.eci.arep.collatzConjeture.frontEnd.Index;
 import edu.eci.arep.collatzConjeture.model.Calculator;
 import spark.Request;
 import spark.Response;
@@ -12,6 +13,7 @@ public class SparkWebServer {
         port(getPort());
         get("/hello", (req, res) -> "Hello, Docker!");
         get("/collatzsequence", SparkWebServer::calculateCollatzConjecture);
+        get("/", SparkWebServer::getIndexPage);
     }
 
     private static int getPort() {
@@ -32,5 +34,10 @@ public class SparkWebServer {
                     "\t\"input\": " + value + ",\n"+
                     "\t\"output\": \"" + answer + "\"\n" +
                 "}";
+    }
+
+    private static String getIndexPage(Request request, Response response) {
+        response.type("text/html");
+        return Index.HTML_INDEX;
     }
 }
